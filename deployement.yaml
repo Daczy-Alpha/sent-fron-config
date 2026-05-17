@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentiment-frontend
+  namespace: sentiment-app
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: sentiment-frontend
+
+  template:
+    metadata:
+      labels:
+        app: sentiment-frontend
+
+    spec:
+      containers:
+        - name: sentiment-frontend
+
+          image: 487620625686.dkr.ecr.eu-north-1.amazonaws.com/sentiment-frontend:1
+
+          ports:
+            - containerPort: 80
+
+          env:
+            - name: BACKEND_URL
+              value: "${{secrets.BACKEND_URL}}"
+
+          resources:
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+
+      imagePullSecrets:
+        - name: ecr-secret
