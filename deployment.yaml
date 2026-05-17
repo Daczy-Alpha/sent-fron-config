@@ -17,9 +17,11 @@ spec:
         app: sentiment-frontend
 
     spec:
+      nodeSelector:
+        role: frontend
+
       containers:
         - name: sentiment-frontend
-
           image: 487620625686.dkr.ecr.eu-north-1.amazonaws.com/sentiment-frontend:5
 
           ports:
@@ -27,7 +29,10 @@ spec:
 
           env:
             - name: BACKEND_URL
-              value: "${{secrets.BACKEND_URL}}"
+              valueFrom:
+                secretKeyRef:
+                  name: frontend-secret
+                  key: BACKEND_URL
 
       imagePullSecrets:
         - name: ecr-secret
