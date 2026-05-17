@@ -29,13 +29,5 @@ spec:
             - name: BACKEND_URL
               value: "${{secrets.BACKEND_URL}}"
 
-          resources:
-            limits:
-              cpu: "250m"
-              memory: "256Mi"
-            requests:
-              cpu: "100m"
-              memory: "128Mi"
-
       imagePullSecrets:
         - name: ecr-secret
